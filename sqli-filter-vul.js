@@ -17,23 +17,16 @@ router.post('/login/auth', function (req, res) {
 
   db.connect();
 
-  var qList = [
-    "SELECT * FROM users WHERE name = '" + u + "' AND password ='" + p + "';",
-    'stuff',
-    'other',
-  ];
+  let vul =
+    "SELECT * FROM users WHERE name = '" + u + "' AND password ='" + p + "';";
 
-  let q = '';
+  let safe = 'SELECT * FROM users WHERE name = $1 AND password = $2;';
 
-  let newQList = qList.filter(
-    (user) =>
-      u ===
-      "SELECT * FROM users WHERE name = '" + u + "' AND password ='" + p + "';"
-  );
+  var qList = [vul, 'stuff', 'other', safe];
 
-  if (newQList.length >= 1) {
-    q = newQList[0];
-  }
+  qList = qList.filter((i) => i === vul);
+
+  let q = qList[0];
 
   return db.one(q);
 });

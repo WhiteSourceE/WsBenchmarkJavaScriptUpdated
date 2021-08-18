@@ -1,7 +1,6 @@
 var mysql = require('mysql');
 var express = require('express');
 var router = express.Router();
-var random_boolean = Math.random() < 0.5;
 
 router.post('/login/auth', function (req, res) {
   var u = req.body.username;
@@ -20,23 +19,30 @@ router.post('/login/auth', function (req, res) {
   db.connect();
   var q = '';
 
-  switch (random_boolean) {
-    case true:
-      q =
-        "SELECT * FROM users WHERE name = '" +
-        u +
-        "' AND password ='" +
-        p +
-        "';";
+  q = "SELECT * FROM users WHERE name = '" + u + "' AND password ='" + p + "';";
+
+  // return numbers between 1 and 3
+  const random_number = Math.floor(Math.random() * 3 + 1);
+
+  switch (random_number) {
+    case 1:
+      //prettier-ignore
+      q = "SELECT * FROM users WHERE name = '" + u + "' AND password ='" + p + "';";
+      arr = [u, p];
       break;
-    case false:
-      q =
-        "SELECT * FROM users WHERE name = '" +
-        'user' +
-        "' AND password ='" +
-        'password' +
-        "';";
+    case 2:
+      //prettier-ignore
+      q = "SELECT * FROM users WHERE name = '" + u + "' AND password ='" + p + "';";
+      arr = [u, p];
       break;
+    case 3:
+      //prettier-ignore
+      q = "SELECT * FROM users WHERE name = '" + u + "' AND password ='" + p + "';";
+      arr = [u, p];
+    default:
+      //prettier-ignore
+      q = "SELECT * FROM users WHERE name = '" + u + "' AND password ='" + p + "';";
+      arr = [u, p];
   }
 
   return db.one(q);

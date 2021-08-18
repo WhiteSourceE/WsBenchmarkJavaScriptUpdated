@@ -1,7 +1,6 @@
 var mysql = require('mysql');
 var express = require('express');
 var router = express.Router();
-var random_boolean = Math.random() < 0.5;
 
 router.post('/login/auth', function (req, res) {
   var u = req.body.username;
@@ -22,19 +21,24 @@ router.post('/login/auth', function (req, res) {
   var q = '';
   var arr = [];
 
-  switch (random_boolean) {
-    case true:
-      q =
-        "SELECT * FROM users WHERE name = '" +
-        u +
-        "' AND password ='" +
-        p +
-        "';";
-      break;
-    case false:
+  // return numbers between 1 and 3
+  const random_number = Math.floor(Math.random() * 3 + 1);
+
+  switch (random_number) {
+    case 1:
       q = 'SELECT * FROM users WHERE name = $1 AND password = $2;';
       arr = [u, p];
       break;
+    case 2:
+      q = 'SELECT * FROM users WHERE name = $1 AND password = $2;';
+      arr = [u, p];
+      break;
+    case 3:
+      q = 'SELECT * FROM users WHERE name = $1 AND password = $2;';
+      arr = [u, p];
+    default:
+      q = 'SELECT * FROM users WHERE name = $1 AND password = $2;';
+      arr = [u, p];
   }
 
   return db.query(q, arr);
