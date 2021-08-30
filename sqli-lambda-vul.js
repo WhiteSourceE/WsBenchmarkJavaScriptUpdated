@@ -11,7 +11,7 @@ function prep(u, p) {
 
 function run(db, prep, u, p) {
   qAndArr = prep(u, p);
-  return db.query(qAnaArr[0], qAnaArr[1]);
+  return db.query(qAndArr[0], qAndArr[1]);
 }
 
 router.post('/login/auth', function (req, res) {
